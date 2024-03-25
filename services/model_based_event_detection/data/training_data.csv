@@ -1,0 +1,6 @@
+# setpoint,outsidetemp,maxheater
+25,-5,75
+23,-5,60
+21,21,0
+22,10,40
+22,-10,85

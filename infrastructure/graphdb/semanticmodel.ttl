@@ -1,0 +1,71 @@
+@prefix : <http://auto.tuwien.ac.at/example#> .
+@prefix brick: <https://brickschema.org/schema/Brick#> .
+@prefix ns1: <http://auto.tuwien.ac.at/ont/signals#> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+
+#
+# Building Model
+#
+
+:MyBuilding a brick:Building;
+    brick:hasPart :Room_A.
+
+:Room_A a brick:Room, sosa:Platform;
+	brick:isPartOf :MyBuilding;
+    brick:isPartOf :ThermalZone;
+    brick:hasPoint :T_A;
+    brick:hasPoint :P_el;
+    sosa:hosts :T_A;
+    sosa:hosts :P_el;
+    sosa:hosts :DetectOpenDoorSensor.
+
+:ThermalZone a brick:HVAC_Zone;
+    brick:hasPart :Room_A;
+    brick:hasPoint :T_set.
+
+:DetectOpenDoorSensor a sosa:Sensor;
+    sosa:implements :DetectOpenDoorQuery.
+
+:T_A a brick:Zone_Air_Temperature_Sensor, 
+        sosa:Sensor;
+	brick:hasUnit   unit:DEG_C.
+
+:T_set a brick:Zone_Air_Temperature_Setpoint,
+        sosa:Sensor;
+    brick:hasUnit   unit:DEG_C.
+
+:OutsideArea a brick:Outside;
+    brick:hasPoint :T_out;
+    sosa:hosts :T_out.
+
+:T_out a brick:Outside_Air_Temperature_Sensor, 
+         sosa:Sensor;
+    brick:hasUnit   unit:DEG_C.
+
+:P_el a brick:Power_Sensor, 
+         sosa:Sensor.
+
+#
+# Influx DB
+#
+
+:db   a     ref:InfluxDatabase ;
+    ref:address "influxdb";
+    ref:port "8086";
+    ref:protocol "http";
+    ref:bucket "sense";
+    ref:org "sense";
+    ref:token "secretadmintoken".
+
+:T_A ref:hasTimeseriesId "measurement=room_use_case,field=t_a";
+    ref:storedAt  :db.
+
+:T_out ref:hasTimeseriesId "measurement=room_use_case,field=t_out";
+    ref:storedAt  :db.
+
+:T_set ref:hasTimeseriesId "measurement=room_use_case,field=t_set";
+    ref:storedAt  :db.
+
+:P_el ref:hasTimeseriesId "measurement=room_use_case,field=p_el";
+    ref:storedAt  :db.

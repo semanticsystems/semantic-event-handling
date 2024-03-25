@@ -1,0 +1,12 @@
+{
+    "mqtt": {
+        "host": "mosquitto",
+        "port": 1883,
+        "clientId": "data_ingestion_service"
+    },
+    "semantic_model": {
+        "host": "semantic-model",
+        "port": 7200,
+        "repository": "sense"
+    }
+}

@@ -1,0 +1,5 @@
+influxdb-client==1.38.0
+paho-mqtt==1.6.1
+requests==2.31.0 
+rdflib==6.3.2
+tenacity==8.2.3

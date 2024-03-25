@@ -1,0 +1,7 @@
+{
+    "mqtt": {
+        "host": "mosquitto",
+        "port": 1883,
+        "clientId": "model_based_event_detection"
+    }
+}

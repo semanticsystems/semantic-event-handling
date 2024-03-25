@@ -1,0 +1,12 @@
+{
+    "mqtt": {
+        "host": "localhost",
+        "port": 1883,
+        "clientId": "data_ingestion_service"
+    },
+    "semantic_model": {
+        "host": "localhost",
+        "port": 7200,
+        "repository": "sense"
+    }
+}

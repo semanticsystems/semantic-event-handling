@@ -1,0 +1,60 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Data Ingestion",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/services/data_ingestion",
+            "program": "data_ingestion.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--config",
+                "config/config.json"
+            ]
+        },
+        {
+            "name": "Run Sensor Simulator",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/services/sensor_simulator",
+            "program": "sensor_simulator.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--config",
+                "config/config.json"
+            ]
+        },
+        {
+            "name": "Run Rule-based Event Detection",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/services/rule_based_event_detection",
+            "program": "rule_based_event_detection.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--config",
+                "config/config.json"
+            ]
+        },
+        {
+            "name": "Run Model-based Event Detection",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/services/model_based_event_detection",
+            "program": "model_based_event_detection.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--config",
+                "config/config.json"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "mqttBroker": {
+        "host": "localhost",
+        "port": 1883,
+        "clientId": "complex_event_detection"
+    },
+    "staticModelPath": "data/sense.ttl"
+}

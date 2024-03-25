@@ -1,0 +1,84 @@
+@prefix : <http://auto.tuwien.ac.at/example#>.
+@prefix s: <http://w3id.org/explainability/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+#
+# These rules are used for the most basic demonstration
+#
+
+#Room A is cold
+:RoomIsColdRule
+	a s:EventDetectionProcedure ;
+	a sh:NodeShape ;
+	sh:targetNode :T_A ;
+     sh:rule [
+		a sh:SPARQLRule ;
+        rdfs:label "Sensor T_A is more than 4°C below the setpoint";
+		sh:order 1 ; 
+	    sh:construct  """
+			PREFIX : <http://auto.tuwien.ac.at/example#>
+            PREFIX s: <http://w3id.org/explainability/>
+			PREFIX sosa: <http://www.w3.org/ns/sosa/> 
+            
+			CONSTRUCT {
+                $this sosa:madeObservation ?newEventObs.
+				?newEventObs a sosa:Observation ;
+					sosa:resultTime ?time ;
+					sosa:usedProcedure :RoomIsColdRule ;
+					sosa:hasResult ?newEvent .
+				?newEvent a :RoomAColdEvent, s:Event .
+			}
+			WHERE {
+				$this sosa:madeObservation [
+					sosa:hasSimpleResult ?temp;
+					sosa:resultTime ?time
+				].
+				:T_set sosa:madeObservation [
+					sosa:hasSimpleResult ?setpoint
+				].
+				FILTER (?temp < (?setpoint - 4))
+    			BIND(REPLACE(STR(?time), "[^0-9]", "") AS ?timeStr)
+				BIND(IRI(CONCAT("http://auto.tuwien.ac.at/example#event_RoomAColdEvent_", ?timeStr)) AS ?newEvent)
+				BIND(IRI(CONCAT("http://auto.tuwien.ac.at/example#obs_RoomAColdEvent_", ?timeStr)) AS ?newEventObs)
+			}
+            """;
+	].
+
+#Room A is normal
+:RoomIsNormalRule
+	a s:EventDetectionProcedure ;
+	a sh:NodeShape ;
+	sh:targetNode :T_A ;
+     sh:rule [
+		a sh:SPARQLRule ;
+        rdfs:label "Sensor T_A is equal to or less than 4°C below the setpoint";
+		sh:order 1 ; 
+	    sh:construct  """
+			PREFIX : <http://auto.tuwien.ac.at/example#>
+            PREFIX s: <http://w3id.org/explainability/>
+			PREFIX sosa: <http://www.w3.org/ns/sosa/> 
+            
+			CONSTRUCT {
+                $this sosa:madeObservation ?newEventObs.
+				?newEventObs a sosa:Observation ;
+					sosa:resultTime ?time ;
+					sosa:usedProcedure :RoomIsNormalRule ;
+					sosa:hasResult ?newEvent .
+				?newEvent a :RoomANormalEvent, s:Event .
+			}
+			WHERE {
+				$this sosa:madeObservation [
+					sosa:hasSimpleResult ?temp;
+					sosa:resultTime ?time
+				].
+				:T_set sosa:madeObservation [
+					sosa:hasSimpleResult ?setpoint
+				].
+				FILTER (?temp >= (?setpoint - 4))
+    			BIND(REPLACE(STR(?time), "[^0-9]", "") AS ?timeStr)
+				BIND(IRI(CONCAT("http://auto.tuwien.ac.at/example#event_RoomANormalEvent_", ?timeStr)) AS ?newEvent)
+				BIND(IRI(CONCAT("http://auto.tuwien.ac.at/example#obs_RoomANormalEvent_", ?timeStr)) AS ?newEventObs)
+			}
+            """;
+	].

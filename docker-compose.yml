@@ -1,0 +1,131 @@
+version: '3.7'
+
+services:
+
+  #
+  # Mosquitto
+  #
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0.18
+    container_name: sense_mosquitto
+    command:
+      - mosquitto
+      - -c
+      - /mosquitto-no-auth.conf
+    ports:
+      - 1883:1883
+    profiles:
+      - infrastructure
+
+  #
+  # GraphDB
+  #
+
+  semantic-model:
+    build: ./infrastructure/graphdb
+    container_name: sense_semantic_model
+    ports:
+      - 7200:7200
+      - 7300:7300
+    profiles:
+      - infrastructure
+
+  semantic-event-log:
+    build: ./infrastructure/graphdb
+    container_name: sense_semantic_event_log
+    ports:
+      - 7201:7200
+      - 7301:7300
+    profiles:
+      - infrastructure
+
+  semantic-event-log-bridge:
+    build: ./services/semantic_event_log_bridge
+    container_name: sense_semantic_event_log_bridge
+    profiles:
+      - infrastructure
+
+  #
+  # InfluxDB
+  #
+
+  influxdb:
+    image: influxdb:2.7.4
+    container_name: sense_influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=sense
+      - DOCKER_INFLUXDB_INIT_PASSWORD=secretpassword
+      - DOCKER_INFLUXDB_INIT_ORG=sense
+      - DOCKER_INFLUXDB_INIT_BUCKET=sense
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=secretadmintoken
+    ports:
+      - 8086:8086
+    profiles:
+      - infrastructure
+
+  #
+  # Data Ingestion Service
+  #
+
+  data_ingestion:
+    build: ./services/data_ingestion
+    container_name: sense_data_ingestion
+    depends_on:
+      - mosquitto
+      - semantic-model
+      - influxdb
+    profiles:
+      - services
+
+  #
+  # Simple Event Detection Service
+  #
+
+  rule_based_event_detection:
+    build: ./services/rule_based_event_detection
+    container_name: sense_rule_based_event_detection
+    depends_on:
+      - mosquitto
+    profiles:
+      - services
+
+  #
+  # Model Based Event Detection Service
+  #
+
+  model_based_event_detection:
+    build: ./services/model_based_event_detection
+    container_name: sense_model_based_event_detection
+    depends_on:
+      - mosquitto
+    profiles:
+      - services
+
+  #
+  # Complex Event Detection Service
+  #
+
+  complex_event_detection:
+    build: ./services/complex_event_detection
+    container_name: sense_complex_event_detection
+    depends_on:
+      - mosquitto
+      - semantic-model
+    profiles:
+      - services
+
+  #
+  # Sensor Simulator Service
+  #
+
+  sensor_simulator:
+    build: ./services/sensor_simulator
+    container_name: sense_sensor_simulator
+    depends_on:
+      - data_ingestion
+      - rule_based_event_detection
+      - complex_event_detection
+    profiles:
+      - scenario

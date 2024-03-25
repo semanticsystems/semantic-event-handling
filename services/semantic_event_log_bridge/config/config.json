@@ -1,0 +1,12 @@
+{
+    "mqtt": {
+        "host": "localhost",
+        "port": 1883,
+        "clientId": "semantic_event_log_bridge"
+    },
+    "event_log": {
+        "host": "localhost",
+        "port": 7201,
+        "repository": "sense"
+    }
+}

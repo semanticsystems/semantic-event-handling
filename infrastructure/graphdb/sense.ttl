@@ -1,0 +1,257 @@
+@prefix : <http://w3.org/ns/sense/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://w3.org/ns/sense/> .
+
+<http://w3.org/ns/sense/> rdf:type owl:Ontology ;
+                           <https://w3id.org/mod#createdWith> <https://chowlk.linkeddata.es/> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  https://w3id.org/mod#createdWith
+<https://w3id.org/mod#createdWith> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://w3.org/ns/sense/detectedEvent
+:detectedEvent rdf:type owl:ObjectProperty ;
+               rdfs:domain <http://www.w3.org/ns/sosa/Observation> ;
+               rdfs:range :Event ;
+               rdfs:comment "relation between observation and the event that is detected by the observation." ;
+               rdfs:label "detected event" .
+
+
+###  http://w3.org/ns/sense/hasEndEvent
+:hasEndEvent rdf:type owl:ObjectProperty ;
+             rdfs:domain :Event ;
+             rdfs:range :State ;
+             rdfs:comment "relation between a state and the event that is ending the state." ;
+             rdfs:label "has end event" .
+
+
+###  http://w3.org/ns/sense/hasEventType
+:hasEventType rdf:type owl:ObjectProperty ;
+              rdfs:domain :Event ;
+              rdfs:range :EventType ;
+              rdfs:comment "relation between an event and its event type." ;
+              rdfs:label "has event type" .
+
+
+###  http://w3.org/ns/sense/hasSensorType
+:hasSensorType rdf:type owl:ObjectProperty ;
+               rdfs:domain <http://www.w3.org/ns/sosa/Sensor> ;
+               rdfs:range :SensorType ;
+               rdfs:comment "relation between a sensor and its sensor type." ;
+               rdfs:label "has sensor type" .
+
+
+###  http://w3.org/ns/sense/hasStartEvent
+:hasStartEvent rdf:type owl:ObjectProperty ;
+               rdfs:domain :Event ;
+               rdfs:comment "relation between a state and the event that is starting the state." ;
+               rdfs:label "has start event" .
+
+
+###  http://w3.org/ns/sense/hasStateType
+:hasStateType rdf:type owl:ObjectProperty ;
+              rdfs:domain :State ;
+              rdfs:range :StateType ;
+              rdfs:comment "relation between a state and its state type." ;
+              rdfs:label "has state type" .
+
+
+###  http://w3.org/ns/sense/observedState
+:observedState rdf:type owl:ObjectProperty ;
+               rdfs:range :State ;
+               rdfs:comment "relation between observation and the state that is observed by the observation." ;
+               rdfs:label "observed state" .
+
+
+###  http://w3.org/ns/sense/possibleSensorType
+:possibleSensorType rdf:type owl:ObjectProperty ;
+                    rdfs:domain :StateType ;
+                    rdfs:range :SensorType ;
+                    rdfs:comment "relation between a state type and the sensor type, where such a state type can occur." ;
+                    rdfs:label "possible sensor type" .
+
+
+###  http://w3.org/ns/sense/triggers
+:triggers rdf:type owl:ObjectProperty ;
+          rdfs:domain :Event ;
+          rdfs:range :EventToStateConversion ;
+          rdfs:comment "relation between an event and the event-to-state conversion that is triggered by an event." ;
+          rdfs:label "triggers" .
+
+
+###  http://www.w3.org/ns/sosa/hosts
+<http://www.w3.org/ns/sosa/hosts> rdf:type owl:ObjectProperty ;
+                                  rdfs:domain <http://www.w3.org/ns/sosa/Platform> ;
+                                  rdfs:range <http://www.w3.org/ns/sosa/Platform> ,
+                                             <http://www.w3.org/ns/sosa/Sensor> ;
+                                  rdfs:comment "Relation between a Platform and a Sensor or Platform, hosted or mounted on it." ;
+                                  rdfs:label "host" .
+
+
+###  http://www.w3.org/ns/sosa/madeObservation
+<http://www.w3.org/ns/sosa/madeObservation> rdf:type owl:ObjectProperty ;
+                                            rdfs:domain <http://www.w3.org/ns/sosa/Sensor> ;
+                                            rdfs:range <http://www.w3.org/ns/sosa/Observation> ;
+                                            rdfs:comment "Relation between a Sensor and an Observation made by the Sensor." ;
+                                            rdfs:label "made observation" .
+
+
+###  http://www.w3.org/ns/sosa/observedProperty
+<http://www.w3.org/ns/sosa/observedProperty> rdf:type owl:ObjectProperty ;
+                                             rdfs:domain <http://www.w3.org/ns/sosa/Observation> ;
+                                             rdfs:range <http://www.w3.org/ns/sosa/ObservableProperty> ;
+                                             rdfs:comment "Relation linking an Observation to the property that was observed. The ObservableProperty should be a property of the FeatureOfInterest (linked by hasFeatureOfInterest) of this Observation." ;
+                                             rdfs:label "observed property" .
+
+
+###  http://www.w3.org/ns/sosa/observes
+<http://www.w3.org/ns/sosa/observes> rdf:type owl:ObjectProperty ;
+                                     rdfs:domain <http://www.w3.org/ns/sosa/Sensor> ;
+                                     rdfs:range <http://www.w3.org/ns/sosa/ObservableProperty> ;
+                                     rdfs:comment "Relation between a Sensor and an ObservableProperty that it is capable of sensing." ;
+                                     rdfs:label "observes" .
+
+
+###  http://www.w3.org/ns/sosa/usedProcedure
+<http://www.w3.org/ns/sosa/usedProcedure> rdf:type owl:ObjectProperty ;
+                                          rdfs:domain <http://www.w3.org/ns/sosa/Observation> ;
+                                          rdfs:range <http://www.w3.org/ns/sosa/Procedure> ;
+                                          rdfs:comment "A relation to link to a re-usable Procedure used in making an Observation, typically through a Sensor." ;
+                                          rdfs:label "used procedure" .
+
+
+###  https://www.w3.org/ns/ssn/implements
+<https://www.w3.org/ns/ssn/implements> rdf:type owl:ObjectProperty ;
+                                       rdfs:domain <http://www.w3.org/ns/sosa/Sensor> ;
+                                       rdfs:range <http://www.w3.org/ns/sosa/Procedure> ;
+                                       rdfs:comment "Relation between an entity that implements a Procedure in some executable way and the Procedure (an algorithm, procedure or method)." ;
+                                       rdfs:label "implements" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://w3.org/ns/sense/algorithm
+:algorithm rdf:type owl:DatatypeProperty ;
+           rdfs:comment "reference to the algorithm used for the procedure." ;
+           rdfs:label "algorithm" .
+
+
+###  http://w3.org/ns/sense/timeSeriesDataRef
+:timeSeriesDataRef rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "reference to the time series data that is needed for the procedure." ;
+                   rdfs:label "time series data ref" .
+
+
+###  http://www.w3.org/ns/sosa/phenomenonTime
+<http://www.w3.org/ns/sosa/phenomenonTime> rdf:type owl:DatatypeProperty ;
+                                           rdfs:comment "The time that the Result of an Observation applies to the FeatureOfInterest. Not necessarily the same as the resultTime. May be an interval or an instant, or some other compound temporal entity [owl-time]." ;
+                                           rdfs:label "phenomenon time" .
+
+
+###  http://www.w3.org/ns/sosa/resultTime
+<http://www.w3.org/ns/sosa/resultTime> rdf:type owl:DatatypeProperty ;
+                                       rdfs:comment "The result time is the instant of time when the Observation was completed." ;
+                                       rdfs:label "has result time" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://w3.org/ns/sense/Event
+:Event rdf:type owl:Class ;
+       rdfs:subClassOf <http://www.w3.org/ns/sosa/Result> ;
+       rdfs:comment "something happening in the system, which is of interest. An event is always considered to be happening at a single time point." ;
+       rdfs:label "Event" .
+
+
+###  http://w3.org/ns/sense/EventDetection
+:EventDetection rdf:type owl:Class ;
+                rdfs:subClassOf <http://www.w3.org/ns/sosa/Procedure> ;
+                rdfs:comment "A procedure to detect an event in the system." ;
+                rdfs:label "Event Detection" .
+
+
+###  http://w3.org/ns/sense/EventToStateConversion
+:EventToStateConversion rdf:type owl:Class ;
+                        rdfs:subClassOf <http://www.w3.org/ns/sosa/Procedure> ;
+                        rdfs:comment "A Procedure that is used to convert an event or set of events to a state or set of states." ;
+                        rdfs:label "Event To State Conversion" .
+
+
+###  http://w3.org/ns/sense/EventType
+:EventType rdf:type owl:Class ;
+           rdfs:comment "A type of event. Each event has an event type." ;
+           rdfs:label "Event Type" .
+
+
+###  http://w3.org/ns/sense/SensorType
+:SensorType rdf:type owl:Class ;
+            rdfs:comment "A type of a sensor. Each sensor as a sensor type." ;
+            rdfs:label "Sensor Type" .
+
+
+###  http://w3.org/ns/sense/State
+:State rdf:type owl:Class ;
+       rdfs:subClassOf <http://www.w3.org/ns/sosa/Result> ;
+       rdfs:comment "A state of a sensor. A state is a condition of a sensor over a period of time. A state is started and ended by an event." ;
+       rdfs:label "State" .
+
+
+###  http://w3.org/ns/sense/StateType
+:StateType rdf:type owl:Class ;
+           rdfs:comment "A type of a state. Each state has a state type." ;
+           rdfs:label "State Type" .
+
+
+###  http://www.w3.org/ns/sosa/ObservableProperty
+<http://www.w3.org/ns/sosa/ObservableProperty> rdf:type owl:Class ;
+                                               rdfs:comment " An observable quality (property, characteristic) of a FeatureOfInterest." ;
+                                               rdfs:label "Observable Property" .
+
+
+###  http://www.w3.org/ns/sosa/Observation
+<http://www.w3.org/ns/sosa/Observation> rdf:type owl:Class ;
+                                        rdfs:comment "Act of carrying out an (Observation) Procedure to estimate or calculate a value of a property of a FeatureOfInterest. Links to a Sensor to describe what made the Observation and how; links to an ObservableProperty to describe what the result is an estimate of, and to a FeatureOfInterest to detail what that property was associated with." ;
+                                        rdfs:label "Observation" .
+
+
+###  http://www.w3.org/ns/sosa/Platform
+<http://www.w3.org/ns/sosa/Platform> rdf:type owl:Class ;
+                                     rdfs:comment "A Platform is an entity that hosts other entities, particularly Sensors, Actuators, Samplers, and other Platforms." ;
+                                     rdfs:label "Platform" .
+
+
+###  http://www.w3.org/ns/sosa/Procedure
+<http://www.w3.org/ns/sosa/Procedure> rdf:type owl:Class ;
+                                      rdfs:comment "A workflow, protocol, plan, algorithm, or computational method specifying how to make an Observation, create a Sample, or make a change to the state of the world (via an Actuator). A Procedure is re-usable, and might be involved in many Observations, Samplings, or Actuations. It explains the steps to be carried out to arrive at reproducible Results." ;
+                                      rdfs:label "Procedure" .
+
+
+###  http://www.w3.org/ns/sosa/Result
+<http://www.w3.org/ns/sosa/Result> rdf:type owl:Class ;
+                                   rdfs:comment "The Result of an Observation, Actuation, or act of Sampling. To store an observation's simple result value one can use the hasSimpleResult property." ;
+                                   rdfs:label "Result" .
+
+
+###  http://www.w3.org/ns/sosa/Sensor
+<http://www.w3.org/ns/sosa/Sensor> rdf:type owl:Class ;
+                                   rdfs:comment " Device, agent (including humans), or software (simulation) involved in, or implementing, a Procedure. Sensors respond to a Stimulus, e.g., a change in the environment, or Input data composed from the Results of prior Observations, and generate a Result. Sensors can be hosted by Platforms." ;
+                                   rdfs:label "Sensor" .
+
+
+###  Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/

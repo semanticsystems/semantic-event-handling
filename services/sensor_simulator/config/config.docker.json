@@ -1,0 +1,9 @@
+{
+    "influxdb": {
+        "host": "influxdb",
+        "port": 8086,
+        "org": "sense",
+        "token": "secretadmintoken",
+        "bucket": "sense"
+    }
+}

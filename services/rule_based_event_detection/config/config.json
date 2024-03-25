@@ -1,0 +1,7 @@
+{
+    "mqtt": {
+        "host": "localhost",
+        "port": 1883,
+        "clientId": "rule_based_event_detection"
+    }
+}
