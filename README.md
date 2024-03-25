@@ -1,4 +1,6 @@
-# Building UC Data
+# Semantic Event Handling Demo
+
+## Use Case Description
 
 TODO
 
